@@ -12,3 +12,12 @@ class Todos extends React.Component {
 }
 
 export default Todos
+
+const todos ={
+    id: "6ty8899",
+    text: "main todo text",
+    description: "simple description",
+    time: "8-8-2020",
+    isComplate: false,
+    isSelect: false
+}
