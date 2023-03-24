@@ -1,35 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types"
 
-import { ListGroup, ListGroupItem, CustomInput, Button } from "reactstrap";
+import { Input, ListGroup, ListGroupItem, Button } from "reactstrap";
 
 // List Item Component
-const ListItem = ({ todos, toggleSelect, toggleComplete }) => {
+const ListItem = ({ todo, toggleSelect, toggleComplete }) => {
 	return (
 		<ListGroupItem className="d-flex align-items-center">
-			<CustomInput
+			<Input
 				type="checkbox"
-				id={todos.id}
-				checked={todos.isSelect}
-				onChange={() => toggleSelect(todos.id)}
+				id={todo.id}
+				checked={todo.isSelect}
+				onChange={() => toggleSelect(todo.id)}
 			/>
-			<div className="mx-4">
-				<h4>{todos.text}</h4>
-				<p>{todos.time.toDateString()}</p>
+			<div className="mx-3">
+				<h4>{todo.text}</h4>
+				<p>{todo.time.toDateString()}</p>
 			</div>
 			<Button
 				className="ml-auto"
-				color={todos.isComplete ? "danger" : "success"}
-				onClick={() => toggleComplete(todos.id)}
+				color={todo.isComplete ? "danger" : "success"}
+				onClick={() => toggleComplete(todo.id)}
 			>
-				{todos.isComplete ? "Complete" : "Running"}
+				{todo.isComplete ? "Complete" : "Running"}
 			</Button>
 		</ListGroupItem>
 	);
 };
 
-ListItem.proptypes = {
-    todos: PropTypes.object.isRequired,
+ListItem.prototype = {
+    todo: PropTypes.object.isRequired,
     toggleSelect: PropTypes.func.isRequired,
     toggleComplete: PropTypes.func.isRequired
 }
@@ -40,7 +40,7 @@ const ListView = ({todos, toggleSelect, toggleComplete}) => {
             {todos.map(todo => (
                 <ListItem
                     key={todo.id}
-                    todos={todo}
+                    todo={todo}
                     toggleSelect={toggleSelect}
                     toggleComplete={toggleComplete}
                 />
@@ -49,8 +49,8 @@ const ListView = ({todos, toggleSelect, toggleComplete}) => {
     )
 }
 
-ListView.proptypes = {
-    todos: PropTypes.object.isRequired,
+ListView.prototype = {
+    todos: PropTypes.array.isRequired,
     toggleSelect: PropTypes.func.isRequired,
     toggleComplete: PropTypes.func.isRequired
 }
