@@ -18,7 +18,7 @@ const ListItem = ({ todo, toggleSelect, toggleComplete }) => {
 				<p>{todo.time.toDateString()}</p>
 			</div>
 			<Button
-				className="ml-auto"
+				className="ms-auto"
 				color={todo.isComplete ? "danger" : "success"}
 				onClick={() => toggleComplete(todo.id)}
 			>
@@ -28,7 +28,7 @@ const ListItem = ({ todo, toggleSelect, toggleComplete }) => {
 	);
 };
 
-ListItem.prototype = {
+ListItem.propTypes = {
     todo: PropTypes.object.isRequired,
     toggleSelect: PropTypes.func.isRequired,
     toggleComplete: PropTypes.func.isRequired
@@ -49,7 +49,7 @@ const ListView = ({todos, toggleSelect, toggleComplete}) => {
     )
 }
 
-ListView.prototype = {
+ListView.propTypes = {
     todos: PropTypes.array.isRequired,
     toggleSelect: PropTypes.func.isRequired,
     toggleComplete: PropTypes.func.isRequired
