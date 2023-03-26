@@ -30,6 +30,7 @@ class Todos extends React.Component {
 		],
 		isOpenTodoFrom: false,
 		searchTerm: "",
+		view: "list"
 	};
 	toggleSelect = (todoId) => {
 		const todos = [...this.state.todos]
@@ -61,7 +62,34 @@ class Todos extends React.Component {
 		this.toggleForm()
 	}
 	
-	handleSearch = () => {}
+	handleSearch = () => { }
+
+	handleFilter = () => { }
+	changeView = (event) => { 
+		this.setState({
+			view: event.target.value
+		})
+	}
+	clearSelected = () => { }
+	clearCompleted = () => { }
+	reset = () => { }
+
+	getView = () => {
+		return this.state.view === "list" ? (
+			<ListView
+				todos={this.state.todos}
+				toggleSelect={this.toggleSelect}
+				toggleComplete={this.toggleComplete}
+			/>
+		) : (
+			<TableView
+				todos={this.state.todos}
+				toggleSelect={this.toggleSelect}
+				toggleComplete={this.toggleComplete}
+			/>	
+		)
+	}
+
     
 	render() {
 		return (
@@ -71,20 +99,16 @@ class Todos extends React.Component {
 					term={this.state.searchTerm}
 					toggleForm={this.toggleForm}
 					handleSearch={this.handleSearch}
+					view={this.state.view}
+					changeView={this.changeView}
+					handleFilter={this.handleFilter}
+					clearSelected={this.clearSelected}
+					clearCompleted={this.clearCompleted}
+					reset={this.reset}
+					
 				/>
 				<div>
-					<ListView
-						todos={this.state.todos}
-						toggleSelect={this.toggleSelect}
-						toggleComplete={this.toggleComplete}
-					/>
-				</div>
-				<div>
-					<TableView
-						todos={this.state.todos}
-						toggleSelect={this.toggleSelect}
-						toggleComplete={this.toggleComplete}
-					/>
+					{this.getView()}
 				</div>
 				<Modal isOpen={this.state.isOpenTodoFrom} toggle={this.toggleForm}>
 					<ModalHeader toggle={this.toggleForm}>
