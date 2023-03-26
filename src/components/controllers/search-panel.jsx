@@ -9,7 +9,7 @@ const SearchPanel = ({term, handleSearch, toggleForm}) => (
             className="mr-3"
             placeholder="Enter search term"
             value={term}
-            onChange={()=> handleSearch(e.target.value)}
+            onChange={(e)=> handleSearch(e.target.value)}
         />
         <Button color="success" onClick={toggleForm}>New</Button>
     </div>

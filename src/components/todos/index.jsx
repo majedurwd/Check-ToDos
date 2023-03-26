@@ -1,37 +1,77 @@
 import React from "react";
+import shortid from "shortid";
+
+import { Modal, ModalHeader, ModalBody } from "reactstrap"
 
 import ListView from "../listview";
 import TableView from "../tableview";
+import Controller from "../controllers";
+import CreateTodoForm from "../create-todo-form";
 
 class Todos extends React.Component {
 	state = {
 		todos: [
 			{
-				id: "6ty8899",
+				id: "6ty889",
 				text: "main todo text",
 				description: "simple description",
 				time: new Date(),
-				isComplate: false,
+				isComplete: false,
 				isSelect: false,
 			},
 			{
-				id: "6ty88b9",
+				id: "6ty88b",
 				text: "main todo text",
 				description: "simple description",
 				time: new Date(),
-				isComplate: false,
+				isComplete: false,
 				isSelect: false,
 			},
 		],
+		isOpenTodoFrom: false,
+		searchTerm: "",
 	};
-	toggleSelect = (todoId) => {};
+	toggleSelect = (todoId) => {
+		const todos = [...this.state.todos]
+		const todo = todos.find(t => t.id === todoId)
+		todo.isSelect = !todo.isSelect
+		this.setState({ todos })
+	};
 
-    toggleComplete = (todoId) => { };
+	toggleComplete = (todoId) => {
+		const todos = [...this.state.todos]
+		let todo = todos.find(t => t.id === todoId)
+		todo.isComplete = !todo.isComplete
+		this.setState({ todos })
+	 };
+
+	toggleForm = () => {
+		this.setState({
+			isOpenTodoFrom: !this.state.isOpenTodoFrom
+		})
+	}
+
+	createTodo = (todo) => {
+		todo.id = shortid.generate()
+		todo.time = new Date()
+		todo.isComplate = false
+		todo.isSelect = false
+		const todos = [todo, ...this.state.todos]
+		this.setState({ todos })
+		this.toggleForm()
+	}
+	
+	handleSearch = () => {}
     
 	render() {
 		return (
 			<div>
 				<h2 className="display-5 text-center mb-5">Check Todos</h2>
+				< Controller
+					term={this.state.searchTerm}
+					toggleForm={this.toggleForm}
+					handleSearch={this.handleSearch}
+				/>
 				<div>
 					<ListView
 						todos={this.state.todos}
@@ -46,6 +86,14 @@ class Todos extends React.Component {
 						toggleComplete={this.toggleComplete}
 					/>
 				</div>
+				<Modal isOpen={this.state.isOpenTodoFrom} toggle={this.toggleForm}>
+					<ModalHeader toggle={this.toggleForm}>
+						Create New Todo Item
+					</ModalHeader>
+					<ModalBody>
+						< CreateTodoForm createTodo={this.createTodo} />
+					</ModalBody>
+				</Modal>
 			</div>
 		);
 	}

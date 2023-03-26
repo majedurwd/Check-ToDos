@@ -22,7 +22,7 @@ const ListItem = ({ todo, toggleSelect, toggleComplete }) => {
 				color={todo.isComplete ? "danger" : "success"}
 				onClick={() => toggleComplete(todo.id)}
 			>
-				{todo.isComplete ? "Complete" : "Running"}
+				{todo.isComplete ? "Completed" : "Running"}
 			</Button>
 		</ListGroupItem>
 	);
