@@ -76,7 +76,7 @@ class Todos extends React.Component {
 	};
 
 	handleFilter = (filter) => { 
-		this.setState({filter})
+		this.setState({filter: filter})
 	};
 	
 	changeView = (event) => {
@@ -84,9 +84,23 @@ class Todos extends React.Component {
 			view: event.target.value,
 		});
 	};
-	clearSelected = () => {};
-	clearCompleted = () => {};
-	reset = () => {};
+	clearSelected = () => {
+		const todos = this.state.todos.filter(todo => !todo.isSelect)
+		this.setState({todos})
+	};
+
+	clearCompleted = () => {
+		const todos = this.state.todos.filter(todo => !todo.isComplete)
+		this.setState({todos})
+	};
+	reset = () => {
+		this.setState({
+			isOpenTodoFrom: false,
+			searchTerm: "",
+			view: "list",
+			filter: "all"
+		})
+	};
 
 	performSearch = () => {
 		return this.state.todos.filter((todo) =>
@@ -97,9 +111,9 @@ class Todos extends React.Component {
 	performFilter = (todos) => {
 		const { filter } = this.state
 		if (filter === "completed") {
-			return todos.filter(todo => todo.isComplate)
+			return todos.filter(todo => todo.isComplete)
 		} else if (filter === "running"){
-			return todos.filter(todo => !todo.isComplate)
+			return todos.filter(todo => !todo.isComplete)
 		} else {
 			return todos
 		}
